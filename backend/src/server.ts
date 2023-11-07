@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import 'express-async-errors';
 import cors from 'cors';
+import path from 'path';
 
 
 import { router } from "./route";
@@ -15,6 +16,12 @@ app.use(cors());
 
 //esse é o arquivo das rotas
 app.use(router);
+
+//aqui trata imagens para ser exibidas
+app.use(
+    '/files',
+    express.static(path.resolve(__dirname, '..', 'tmp'))
+);
 
 //tratando erros
 app.use((err: Error, req: Request, res: Response, next: NextFunction)=>{

@@ -1,4 +1,5 @@
-import { useState, FormEvent, useContext } from 'react'
+import { useState, FormEvent, useContext } from 'react';
+import {toast} from "react-toastify";
 
 import Head from 'next/head'
 import Image from 'next/image';
@@ -26,7 +27,7 @@ export default function SignUp() {
     event.preventDefault();
 
     if(name === '' || email === '' || password === ''){
-      alert("PREENCHA TODOS OS CAMPOS")
+      toast.warning("PREENCHA TODOS OS CAMPOS")
       return;
     }
 

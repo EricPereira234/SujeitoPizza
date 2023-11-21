@@ -9,12 +9,19 @@ type AutContextData = {
     isAuthenticated: boolean;
     signIn: (credentials: SignInProps) => Promise<void>;
     signOut: ()=> void;
+    signUp: (credentials: SignUpProps) => Promise<void>;
 }
 
 type UserProps = {
     id: string;
     name: string;
     email: string;
+}
+
+type SignUpProps = {
+    name: string;
+    email: string;
+    password: string;
 }
 
 type SignInProps = {
@@ -44,6 +51,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const [user, setUser] = useState<UserProps>();
     const isAuthenticated = !!user;
 
+    //função que loga o usuário
     async function signIn({ email, password }: SignInProps) {
         try{
             const response = await api.post('/session', {email, password});
@@ -70,6 +78,29 @@ export function AuthProvider({ children }: AuthProviderProps) {
         }
     }
 
+    /// função que cadastra usuários
+    async function signUp({name, email, password}: SignUpProps) {
+        try{
+            
+            // aqui cadastra usuarios usando api
+            const response = await api.post('/users', {
+                name,
+                email,
+                password
+            });
+
+            alert('Cadastrado com sucesso !');
+
+            Router.push('/');
+
+
+
+
+        }catch(erro){
+           console.log("erro ao cadastrar! "+erro);
+        }
+    }
+
 
 
 
@@ -80,6 +111,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
                 isAuthenticated,
                 signIn,
                 signOut,
+                signUp,
             }
         }>
 
